@@ -61,6 +61,24 @@ Paste the following:
 
 This keeps 7 days of compressed logs and deletes older ones automatically.
 
+## Important: sudo without password
+
+Since the script runs from cron without a terminal, sudo will fail unless you configure it to allow the command without a password prompt.
+
+Open the sudoers file:
+
+```bash
+sudo visudo
+```
+
+Add the following line **at the very end of the file**, after all other rules:
+
+```
+yourusername ALL=(ALL) NOPASSWD: /usr/local/bin/iagon-node
+```
+
+Replace `yourusername` with your actual system user. The line must be at the end because earlier rules (like `%sudo ALL=(ALL:ALL) ALL`) take precedence and will override it otherwise.
+
 ## How it works
 
 Every 5 minutes, the script checks the status of the Iagon node service. If it is stopped, it starts it automatically. All actions are logged with a UTC timestamp.
