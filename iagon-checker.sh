@@ -8,7 +8,7 @@ STATUS=$(iagon-node service status)
 
 if echo "$STATUS" | grep -qi "stopped"; then
     log "Service stopped. Starting..."
-    echo "yes" | sudo iagon-node service start
+    echo "yes" | sudo iagon-node service start | sed 's/\x1b\[[0-9;]*m//g'
     log "Start command executed."
 elif echo "$STATUS" | grep -qi "running"; then
     log "Service running. Nothing to do."
